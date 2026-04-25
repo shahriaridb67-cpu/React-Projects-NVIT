@@ -3,8 +3,11 @@ import Product from '../models/Product';
 
 export const getProducts = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { keyword, category, brand, minPrice, maxPrice, sort, page = 1, limit = 12, featured, trending, inStock } = req.query;
+    // Added origin and isOrganicCertified to req.query
+    const { keyword, category, brand, minPrice, maxPrice, sort, page = 1, limit = 12, featured, trending, inStock, origin, isOrganicCertified } = req.query;
+    
     const query: Record<string, unknown> = { isActive: true };
+    
     if (keyword) query.$text = { $search: keyword };
     if (category) query.category = category;
     if (brand) query.brand = { $regex: brand, $options: 'i' };
@@ -12,12 +15,24 @@ export const getProducts = async (req: Request, res: Response): Promise<void> =>
     if (inStock === 'true') query.stock = { $gt: 0 };
     if (featured === 'true') query.isFeatured = true;
     if (trending === 'true') query.isTrending = true;
-    const sortMap: Record<string, object> = { price_asc: { price: 1 }, price_desc: { price: -1 }, rating: { ratings: -1 }, popular: { numReviews: -1 }, newest: { createdAt: -1 } };
+
+    // --- Ghorer Bazar Custom Filtering ---
+    if (origin) query.origin = origin;
+    if (isOrganicCertified === 'true') query.isOrganicCertified = true;
+
+    const sortMap: Record<string, Record<string, 1 | -1>> = { price_asc: { price: 1 }, price_desc: { price: -1 }, rating: { ratings: -1 }, popular: { numReviews: -1 }, newest: { createdAt: -1 } };
     const sortOption = sortMap[sort as string] || { createdAt: -1 };
     const skip = (Number(page) - 1) * Number(limit);
-    const [products, total] = await Promise.all([Product.find(query).populate('category', 'name slug').sort(sortOption).skip(skip).limit(Number(limit)), Product.countDocuments(query)]);
+    
+    const [products, total] = await Promise.all([
+        Product.find(query).populate('category', 'name slug').sort(sortOption).skip(skip).limit(Number(limit)), 
+        Product.countDocuments(query)
+    ]);
+    
     res.json({ success: true, products, total, page: Number(page), pages: Math.ceil(total / Number(limit)) });
-  } catch (error) { res.status(500).json({ success: false, message: (error as Error).message }); }
+  } catch (error) { 
+      res.status(500).json({ success: false, message: (error as Error).message }); 
+  }
 };
 
 export const getProduct = async (req: Request, res: Response): Promise<void> => {

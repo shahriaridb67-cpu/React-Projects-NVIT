@@ -17,7 +17,9 @@ const AdminProductForm = () => {
     discountPrice: '', category: '', brand: '', stock: '',
     tags: '', isFeatured: false, isTrending: false,
     isPreOrder: false, preOrderNote: '', offerLabel: '', weight: '',
-    images: []
+    images: [],
+    // ─── GHORER BAZAR CUSTOM FIELDS ───
+    origin: '', healthBenefits: '', expiryDuration: '', isOrganicCertified: false
   });
 
   const [variants, setVariants] = useState([]);
@@ -35,7 +37,12 @@ const AdminProductForm = () => {
             brand: p.brand||'', stock: p.stock||'', tags: p.tags?.join(', ')||'',
             isFeatured: p.isFeatured, isTrending: p.isTrending, isPreOrder: p.isPreOrder,
             preOrderNote: p.preOrderNote||'', offerLabel: p.offerLabel||'',
-            weight: p.weight||'', images: p.images||[]
+            weight: p.weight||'', images: p.images||[],
+            // ─── GHORER BAZAR CUSTOM FIELDS ───
+            origin: p.origin||'', 
+            healthBenefits: p.healthBenefits?.join(', ')||'',
+            expiryDuration: p.expiryDuration||'',
+            isOrganicCertified: p.isOrganicCertified||false
           });
           setVariants(p.variants||[]);
         })
@@ -73,6 +80,8 @@ const AdminProductForm = () => {
       const payload = {
         ...form,
         tags: form.tags.split(',').map(t => t.trim()).filter(Boolean),
+        // ─── GHORER BAZAR CUSTOM FIELDS ───
+        healthBenefits: form.healthBenefits.split(',').map(b => b.trim()).filter(Boolean),
         variants,
         price: Number(form.price),
         discountPrice: Number(form.discountPrice) || 0,
@@ -121,6 +130,23 @@ const AdminProductForm = () => {
                 <div className="form-group"><label className="form-label">Brand</label><input className="form-control" value={form.brand} onChange={e => set('brand', e.target.value)} placeholder="e.g. Samsung" /></div>
               </div>
               <div className="form-group"><label className="form-label">Tags (comma separated)</label><input className="form-control" value={form.tags} onChange={e => set('tags', e.target.value)} placeholder="electronics, mobile, android" /></div>
+            </div>
+
+            {/* GHORER BAZAR - ORGANIC/AGRO FIELDS */}
+            <div className="card card-body">
+              <h3 style={{ marginBottom:20 }}>🌿 Ghorer Bazar (Organic/Agro)</h3>
+              <div className="form-group"><label className="form-label">Origin / Source Location</label><input className="form-control" value={form.origin} onChange={e => set('origin', e.target.value)} placeholder="e.g. Sundarbans, Rajshahi, Rural Bangladesh" /></div>
+              <div className="form-group"><label className="form-label">Health Benefits (comma separated)</label><textarea className="form-control" rows={3} value={form.healthBenefits} onChange={e => set('healthBenefits', e.target.value)} placeholder="e.g. Boosts immunity, Rich in antioxidants, Aids digestion" /></div>
+              <div className="grid grid-2">
+                <div className="form-group"><label className="form-label">Expiry Duration / Shelf Life</label><input className="form-control" value={form.expiryDuration} onChange={e => set('expiryDuration', e.target.value)} placeholder="e.g. 18 months, 24 months" /></div>
+                <label style={{ display:'flex', alignItems:'center', gap:12, padding:'20px 0', cursor:'pointer' }}>
+                  <input type="checkbox" checked={form.isOrganicCertified} onChange={e => set('isOrganicCertified', e.target.checked)} style={{ width:18, height:18, accentColor:'#2D5A27' }} />
+                  <div>
+                    <p style={{ fontWeight:600, fontSize:14 }}>✓ 100% Organic Certified</p>
+                    <p style={{ fontSize:12, color:'var(--gray-500)' }}>Product is certified organic</p>
+                  </div>
+                </label>
+              </div>
             </div>
 
             <div className="card card-body">

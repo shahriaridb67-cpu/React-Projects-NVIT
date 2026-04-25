@@ -31,6 +31,16 @@ export interface IUser extends Document {
   isActive: boolean;
   createdAt: Date;
   updatedAt: Date;
+
+ 
+  activeSubscriptions?: {
+    product: Types.ObjectId;
+    frequency: 'weekly' | 'monthly';
+    quantity: number;
+    nextDeliveryDate?: Date;
+    isActive: boolean;
+  }[];
+
   matchPassword(enteredPassword: string): Promise<boolean>;
   getEmailVerificationToken(): string;
   getResetPasswordToken(): string;
@@ -92,6 +102,10 @@ export interface IProduct extends Document {
   offerEndDate?: Date;
   createdAt: Date;
   updatedAt: Date;
+  origin?: string;
+  healthBenefits?: string[];
+  expiryDuration?: string;
+  isOrganicCertified?: boolean;
 }
 
 // ─── Order 

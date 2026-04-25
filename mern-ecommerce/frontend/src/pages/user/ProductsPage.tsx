@@ -24,6 +24,9 @@ const ProductsPage: React.FC = () => {
     page: 1,
     featured: searchParams.get('featured') || '',
     trending: searchParams.get('trending') || '',
+    // ─── GHORER BAZAR CUSTOM FILTERS ───
+    origin: '',
+    isOrganicCertified: '',
   });
 
   const fetchProducts = useCallback(async () => {
@@ -51,7 +54,7 @@ const ProductsPage: React.FC = () => {
     setFilters(prev => ({ ...prev, [key]: value, page: 1 }));
   };
 
-  const clearFilters = () => setFilters({ keyword: '', category: '', brand: '', minPrice: '', maxPrice: '', sort: 'newest', page: 1, featured: '', trending: '' });
+  const clearFilters = () => setFilters({ keyword: '', category: '', brand: '', minPrice: '', maxPrice: '', sort: 'newest', page: 1, featured: '', trending: '', origin: '', isOrganicCertified: '' });
 
   return (
     <div className="products-page">
@@ -121,6 +124,22 @@ const ProductsPage: React.FC = () => {
                 <input className="form-control" type="number" placeholder="Min BDT" value={filters.minPrice} onChange={e => updateFilter('minPrice', e.target.value)} />
                 <span>—</span>
                 <input className="form-control" type="number" placeholder="Max BDT" value={filters.maxPrice} onChange={e => updateFilter('maxPrice', e.target.value)} />
+              </div>
+            </div>
+
+            {/* ─── GHORER BAZAR - ORGANIC FILTERS ─── */}
+            <div className="filter-section">
+              <h4>🌿 Organic & Natural</h4>
+              <div className="filter-options">
+                <label style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '8px 0', cursor: 'pointer' }}>
+                  <input 
+                    type="checkbox" 
+                    checked={filters.isOrganicCertified === 'true'} 
+                    onChange={e => updateFilter('isOrganicCertified', e.target.checked ? 'true' : '')}
+                    style={{ width: 18, height: 18, accentColor: '#2D5A27' }}
+                  />
+                  <span style={{ fontSize: 13, fontWeight: 500 }}>✓ Certified Organic Only</span>
+                </label>
               </div>
             </div>
           </div>

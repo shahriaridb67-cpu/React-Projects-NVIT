@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FiHeart, FiShoppingCart, FiEye, FiPackage } from 'react-icons/fi';
+import { FiHeart, FiShoppingCart, FiEye, FiPackage, FiCheckCircle, FiMapPin } from 'react-icons/fi';
 import { useCart } from '../../context/CartContext';
 import { Product } from '../../types';
 import API from '../../utils/api';
@@ -41,6 +41,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           <img src={product.images?.[0]?.url || 'https://placehold.co/300x300?text=No+Image'} alt={product.name} className="product-img" loading="lazy" />
         </Link>
         <div className="product-badges">
+          {/* Ghorer Bazar Organic Badge */}
+          {product.isOrganicCertified && (
+            <span className="badge-organic"><FiCheckCircle /> 100% Organic</span>
+          )}
           {isOnSale && <span className="badge-sale">-{product.discountPercent}%</span>}
           {product.isTrending && <span className="badge-trending">Trending</span>}
           {isOutOfStock && <span className="badge-preorder"><FiPackage /> Pre-Order</span>}
@@ -54,7 +58,23 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       </div>
       <div className="product-info">
         {product.brand && <span className="product-brand">{product.brand}</span>}
+        
         <Link to={`/products/${product.slug || product._id}`} className="product-name">{product.name}</Link>
+        
+        {/* Ghorer Bazar Source/Origin */}
+        {product.origin && (
+          <div className="product-origin">
+            <FiMapPin /> Source: {product.origin}
+          </div>
+        )}
+
+        {/* Ghorer Bazar Health Benefits - Tooltip */}
+        {product.healthBenefits && product.healthBenefits.length > 0 && (
+          <div className="health-benefits-preview" title={product.healthBenefits.join(', ')}>
+            💚 <small>{product.healthBenefits.length} health benefit{product.healthBenefits.length > 1 ? 's' : ''}</small>
+          </div>
+        )}
+
         <Stars rating={product.ratings} />
         <div className="product-price-row">
           <span className="product-price">BDT {displayPrice.toLocaleString()}</span>

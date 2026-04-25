@@ -31,6 +31,23 @@ const productSchema = new Schema<IProduct>(
     weight: Number,
     offerLabel: String,
     offerEndDate: Date,
+
+
+    origin: { 
+      type: String, 
+      trim: true,
+      default: 'Deshi' 
+    },
+    healthBenefits: [{ 
+      type: String 
+    }], 
+    expiryDuration: { 
+      type: String 
+    }, 
+    isOrganicCertified: { 
+      type: Boolean, 
+      default: false 
+    },
   },
   { timestamps: true }
 );

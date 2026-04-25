@@ -29,6 +29,15 @@ const userSchema = new Schema<IUser>(
     addresses: [addressSchema],
     wishlist: [{ type: Schema.Types.ObjectId, ref: 'Product' }],
     isActive: { type: Boolean, default: true },
+
+    // --- Ghorer Bazar Theme Custom Fields (Subscription Feature) ---
+    activeSubscriptions: [{
+      product: { type: Schema.Types.ObjectId, ref: 'Product' },
+      frequency: { type: String, enum: ['weekly', 'monthly'], default: 'monthly' },
+      quantity: { type: Number, default: 1 },
+      nextDeliveryDate: Date,
+      isActive: { type: Boolean, default: true }
+    }],
   },
   { timestamps: true }
 );
@@ -63,6 +72,3 @@ userSchema.methods.getResetPasswordToken = function (): string {
 };
 
 export default mongoose.model<IUser>('User', userSchema);
-
-
-

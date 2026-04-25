@@ -11,18 +11,18 @@ interface HeroSlide { bg: string; title: string; subtitle: string; cta: string; 
 interface Feature { icon: React.ReactNode; title: string; desc: string; color: string; }
 
 const heroSlides: HeroSlide[] = [
-  { bg: 'linear-gradient(135deg,#6C63FF 0%,#43C6AC 100%)', title: 'Summer Sale is Live!', subtitle: 'Up to 50% off on selected items', cta: 'Shop Now', link: '/products?sort=popular', emoji: '🛍️' },
-  { bg: 'linear-gradient(135deg,#FF6584 0%,#FF8E53 100%)', title: 'New Arrivals', subtitle: 'Discover the latest trends', cta: 'Explore', link: '/products?sort=newest', emoji: '✨' },
-  { bg: 'linear-gradient(135deg,#1a1a2e 0%,#6C63FF 100%)', title: 'Premium Electronics', subtitle: 'Top brands at best prices', cta: 'Browse', link: '/products', emoji: '📱' },
-  { bg: 'linear-gradient(135deg,#43C6AC 0%,#3B82F6 100%)', title: 'Free Shipping', subtitle: 'On all orders above BDT 1000', cta: 'Order Now', link: '/products', emoji: '🚚' },
-  { bg: 'linear-gradient(135deg,#FF6584 0%,#6C63FF 100%)', title: 'Weekend Deals', subtitle: 'Limited time offers every weekend', cta: 'Grab Deals', link: '/products?sort=popular', emoji: '🔥' },
+  { bg: 'linear-gradient(135deg,#2D5A27 0%,#43C6AC 100%)', title: 'Ghorer Bazar - Fresh from Farm', subtitle: '100% Certified Organic Products at Your Doorstep', cta: 'Shop Now', link: '/products?isOrganicCertified=true', emoji: '🌾' },
+  { bg: 'linear-gradient(135deg,#8B4513 0%,#D4A574 100%)', title: 'Pure Sundarbans Honey', subtitle: 'Raw, unfiltered, straight from nature', cta: 'Explore', link: '/products?search=honey', emoji: '🍯' },
+  { bg: 'linear-gradient(135deg,#F4A460 0%,#DAA520 100%)', title: 'Authentic Desi Ghee', subtitle: 'Slow-cooked using centuries-old methods', cta: 'Browse', link: '/products?search=ghee', emoji: '🧈' },
+  { bg: 'linear-gradient(135deg,#6B8E23 0%,#228B22 100%)', title: 'Organic Oils & Extracts', subtitle: 'Cold-pressed for maximum nutrition', cta: 'Order Now', link: '/products?category=oils', emoji: '🌿' },
+  { bg: 'linear-gradient(135deg,#2D5A27 0%,#90EE90 100%)', title: 'Handmade Spices & Blends', subtitle: 'Artisan-crafted, no additives, pure flavor', cta: 'Discover', link: '/products?category=spices', emoji: '🌶️' },
 ];
 
 const features: Feature[] = [
-  { icon: <FiTruck />, title: 'Free Delivery', desc: 'On orders over BDT 1000', color: '#6C63FF' },
-  { icon: <FiShield />, title: 'Secure Payment', desc: '100% secure transactions', color: '#43C6AC' },
-  { icon: <FiRefreshCw />, title: 'Easy Returns', desc: '7-day return policy', color: '#FF6584' },
-  { icon: <FiHeadphones />, title: '24/7 Support', desc: 'Dedicated support team', color: '#ffc107' },
+  { icon: <FiTruck />, title: 'Fresh Farm Delivery', desc: 'Harvested fresh, delivered safely', color: '#2D5A27' },
+  { icon: <FiShield />, title: 'Certified Organic', desc: '100% verified organic products', color: '#43C6AC' },
+  { icon: <FiRefreshCw />, title: 'Quality Guarantee', desc: '30-day satisfaction guarantee', color: '#8B4513' },
+  { icon: <FiHeadphones />, title: 'Farm Support 24/7', desc: 'Direct connection with farmers', color: '#DAA520' },
 ];
 
 const HomePage: React.FC = () => {
@@ -119,7 +119,7 @@ const HomePage: React.FC = () => {
         <section className="section products-section trending">
           <div className="container">
             <div className="section-header">
-              <div><h2 className="section-title">Trending Products</h2><p className="section-subtitle">Most popular items this week</p></div>
+              <div><h2 className="section-title">🔥 Customer Favorites</h2><p className="section-subtitle">Most loved organic products this week</p></div>
               <Link to="/products?trending=true" className="btn btn-outline">View All <FiArrowRight /></Link>
             </div>
             <div className="grid grid-4">{trendingProducts.map(p => <ProductCard key={p._id} product={p} />)}</div>
@@ -128,13 +128,13 @@ const HomePage: React.FC = () => {
       )}
 
       {/* Promo Banner */}
-      <section className="promo-banner">
+      <section className="promo-banner" style={{ background: 'linear-gradient(135deg,#2D5A27 0%,#43C6AC 100%)' }}>
         <div className="container">
           <div className="promo-inner">
             <div className="promo-text">
-              <h2>Special Offer!</h2>
-              <p>Get 20% off your first order with code <strong>WELCOME20</strong></p>
-              <Link to="/products" className="btn btn-lg" style={{ background: 'white', color: 'var(--primary)' }}>Shop Now <FiArrowRight /></Link>
+              <h2>🌾 Support Local Farmers</h2>
+              <p>Every purchase supports organic farmers. Get 15% off with code <strong>FRESH15</strong></p>
+              <Link to="/products?isOrganicCertified=true" className="btn btn-lg" style={{ background: 'white', color: '#2D5A27', fontWeight: 700 }}>Shop Organic <FiArrowRight /></Link>
             </div>
             <div className="promo-emoji"></div>
           </div>
@@ -146,7 +146,7 @@ const HomePage: React.FC = () => {
         <section className="section products-section">
           <div className="container">
             <div className="section-header">
-              <div><h2 className="section-title">Featured Products</h2><p className="section-subtitle">Handpicked just for you</p></div>
+              <div><h2 className="section-title">✓ Our Collection</h2><p className="section-subtitle">Handpicked organic treasures from local farms</p></div>
               <Link to="/products?featured=true" className="btn btn-outline">View All <FiArrowRight /></Link>
             </div>
             <div className="grid grid-4">{featuredProducts.map(p => <ProductCard key={p._id} product={p} />)}</div>
@@ -159,7 +159,7 @@ const HomePage: React.FC = () => {
         <section className="section products-section new-arrivals">
           <div className="container">
             <div className="section-header">
-              <div><h2 className="section-title">New Arrivals</h2><p className="section-subtitle">Fresh picks added this week</p></div>
+              <div><h2 className="section-title">🌱 Just Arrived</h2><p className="section-subtitle">Fresh farm products added this week</p></div>
               <Link to="/products?sort=newest" className="btn btn-outline">View All <FiArrowRight /></Link>
             </div>
             <div className="grid grid-4">{newArrivals.map(p => <ProductCard key={p._id} product={p} />)}</div>

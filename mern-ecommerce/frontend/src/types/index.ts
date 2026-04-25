@@ -78,6 +78,10 @@ export interface Product {
   offerLabel?: string;
   weight?: number;
   createdAt: string;
+  origin?: string;
+  healthBenefits?: string[];
+  expiryDuration?: string;
+  isOrganicCertified?: boolean;
 }
 
 // ─── Cart 
@@ -219,4 +223,7 @@ export interface ProductFilters {
   featured?: string;
   trending?: string;
   inStock?: string;
+  // ─── GHORER BAZAR CUSTOM FILTERS ───
+  origin?: string;
+  isOrganicCertified?: string;
 }

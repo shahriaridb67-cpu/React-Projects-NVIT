@@ -107,6 +107,45 @@ const ProductDetailPage: React.FC = () => {
                 : <span style={{ color: 'var(--success)', fontWeight: 600 }}>In Stock ({product.stock} available)</span>}
             </div>
 
+            {/* ─── GHORER BAZAR - ORGANIC/AGRO DETAILS ─── */}
+            {(product.origin || product.isOrganicCertified || product.expiryDuration || product.healthBenefits?.length) && (
+              <div className="organic-details" style={{ background: '#f0f7f0', border: '1px solid #d4edda', borderRadius: 'var(--radius)', padding: 16, marginBottom: 16 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
+                  <span style={{ fontSize: 18 }}>🌿</span>
+                  <strong style={{ color: '#2D5A27' }}>Ghorer Bazar - Organic Details</strong>
+                </div>
+                
+                {product.isOrganicCertified && (
+                  <div style={{ marginBottom: 10, display: 'flex', alignItems: 'center', gap: 6, color: '#2D5A27', fontWeight: 600 }}>
+                    <span style={{ fontSize: 16 }}>✓</span> 100% Certified Organic
+                  </div>
+                )}
+                
+                {product.origin && (
+                  <p style={{ marginBottom: 10, fontSize: 14 }}>
+                    <strong>📍 Source:</strong> {product.origin}
+                  </p>
+                )}
+                
+                {product.expiryDuration && (
+                  <p style={{ marginBottom: 10, fontSize: 14 }}>
+                    <strong>📅 Shelf Life:</strong> {product.expiryDuration}
+                  </p>
+                )}
+                
+                {product.healthBenefits && product.healthBenefits.length > 0 && (
+                  <div>
+                    <strong style={{ fontSize: 14, display: 'block', marginBottom: 8 }}>💚 Health Benefits:</strong>
+                    <ul style={{ marginLeft: 20, fontSize: 13, color: '#2D5A27' }}>
+                      {product.healthBenefits.map((benefit, i) => (
+                        <li key={i} style={{ marginBottom: 4 }}>{benefit}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            )}
+
             {sizes.length > 0 && (
               <div className="detail-variant">
                 <label>Size:</label>
